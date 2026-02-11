@@ -104,7 +104,7 @@
             top: 10px;
             left: 10px;
             width: 328px;
-    height: auto;
+            height: auto;
         }
 
         .bottom-left-img {
@@ -136,19 +136,19 @@
         }
 
         .gift {
-             background: #ffb7a5;
-    border: 3px solid #c2185b;
-    color: #c2185b;
+            background: #ffb7a5;
+            border: 3px solid #c2185b;
+            color: #c2185b;
 
-    padding: clamp(22px, 5vw, 40px) clamp(40px, 10vw, 80px);
-    border-radius: 30px;
+            padding: clamp(22px, 5vw, 40px) clamp(40px, 10vw, 80px);
+            border-radius: 30px;
 
-    font-family: 'Schoolbell', cursive;
-    font-size: clamp(18px, 4vw, 26px);
-    font-weight: bold;
+            font-family: 'Schoolbell', cursive;
+            font-size: clamp(18px, 4vw, 26px);
+            font-weight: bold;
 
-    cursor: pointer;
-    transition: transform 0.3s ease, background 0.3s ease;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
         }
 
         .gift:hover {
@@ -219,7 +219,8 @@
         }
 
         .gift1-girl {
-            width: clamp(200px, 40vw, 450px);
+            width: clamp(200px, 30vw, 450px);
+            margin: 0 0 0 65px;
         }
 
         /* IMAGE BUTTON (BOTTOM RIGHT) */
@@ -471,17 +472,58 @@
             justify-content: center;
             align-items: center;
         }
-        @media (max-width: 600px) {
-    .gift {
-        width: 90%;
-        max-width: 360px;
-    }
-}
 
-.gift:hover {
-    transform: scale(1.08);
-    background: #ff9f8a;
-}
+        @media (max-width: 600px) {
+            .gift {
+                width: 90%;
+                max-width: 360px;
+            }
+        }
+
+        .gift:hover {
+            transform: scale(1.08);
+            background: #ff9f8a;
+        }
+
+        /* Gift 1 single-card layout */
+        /* ===== GIFT 1 SINGLE CENTER FIX ===== */
+        .gift1-layout.gift1-single {
+            display: flex !important;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(20px, 5vw, 40px);
+            min-height: 70vh;
+        }
+
+        /* Ensure center image truly centered */
+        .gift1-layout.gift1-single .gift1-center {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        /* Card below center */
+        .gift1-layout.gift1-single .gift1-below {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        /* Card sizing */
+        .gift1-layout.gift1-single .gift1-card {
+            width: clamp(220px, 45vw, 380px);
+            margin: 0 0px 0px 51px;
+        }
+
+        .gift1-layout.gift1-single {
+            display: flex !important;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(20px, 5vw, 40px);
+            min-height: 70vh;
+        }
     </style>
 </head>
 
@@ -497,7 +539,7 @@
     <!-- HOME -->
     <div class="page active" id="home">
         <img src="dudububu.gif" class="top-gif">
-        <h1>Hey Riddhima,<br>Will you be my Valentine?</h1>
+        <h1>Hey there,<br>Will you be my Valentine?</h1>
         <button onclick="hideCornerImages(); showPage('yes')">YES OF COURSE</button>
         <button onclick="showPage('no')">NO THANK YOU</button>
     </div>
@@ -526,24 +568,27 @@
     <!-- GIFT 1 -->
     <div class="page" id="gift1">
 
-        <div class="gift1-layout">
+        <div class="gift1-layout gift1-single">
 
             <!-- LEFT CARDS -->
-            <div class="gift1-column left">
+            <!-- <div class="gift1-column left">
                 <img src="card1.png" class="gift1-card rotate1">
                 <img src="card2.png" class="gift1-card rotate2">
-            </div>
+            </div> -->
 
             <!-- CENTER IMAGE -->
             <div class="gift1-center">
-                <img src="girl.png" class="gift1-girl">
+                <img src="gulab.png" class="gift1-girl">
             </div>
-
+            <!-- CARD BELOW CENTER -->
+            <div class="gift1-below">
+                <img src="card1.png" class="gift1-card rotate1">
+            </div>
             <!-- RIGHT CARDS -->
-            <div class="gift1-column right">
+            <!-- <div class="gift1-column right">
                 <img src="card3.png" class="gift1-card rotate3">
                 <img src="card4.png" class="gift1-card rotate4">
-            </div>
+            </div> -->
 
         </div>
 
@@ -602,6 +647,12 @@
 
     </div>
 
+    <audio id="gift1-music" loop>
+        <source src="mySong2.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="gift2-music" loop>
+        <source src="mySong1.mp3" type="audio/mpeg">
+    </audio>
     <audio id="gift3-music" loop>
         <source src="mySong.mp3" type="audio/mpeg">
     </audio>
@@ -635,7 +686,9 @@
         }
     </script> -->
 
-    <script>
+    <!-- <script>
+        const gift1Music = document.getElementById("gift1-music");
+        const gift2Music = document.getElementById("gift2-music");
         const gift3Music = document.getElementById("gift3-music");
 
         function showPage(id) {
@@ -670,9 +723,62 @@
                 img.style.display = 'block';
             });
         }
+    </script> -->
+
+
+
+    <script>
+        const gift1Music = document.getElementById("gift1-music");
+        const gift2Music = document.getElementById("gift2-music");
+        const gift3Music = document.getElementById("gift3-music");
+
+        function stopAllMusic() {
+            [gift1Music, gift2Music, gift3Music].forEach(music => {
+                music.pause();
+                music.currentTime = 0;
+            });
+        }
+
+        function showPage(id) {
+            // Switch pages
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+
+            // Stop all music first
+            stopAllMusic();
+
+            // Play music based on page
+            if (id === 'gift1') {
+                gift1Music.play().catch(() => { });
+            }
+            if (id === 'gift2') {
+                gift2Music.play().catch(() => { });
+            }
+            if (id === 'gift3') {
+                gift3Music.play().catch(() => { });
+            }
+
+            // Corner images logic
+            if (id === 'home') {
+                showCornerImages();
+            } else {
+                hideCornerImages();
+            }
+        }
+
+        function hideCornerImages() {
+            document.querySelectorAll('.corner-img').forEach(img => {
+                img.style.display = 'none';
+            });
+        }
+
+        function showCornerImages() {
+            document.querySelectorAll('.corner-img').forEach(img => {
+                img.style.display = 'block';
+            });
+        }
     </script>
 
 </body>
-
 
 </html>
